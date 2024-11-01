@@ -9,7 +9,7 @@ export const SessionProvider = ({ children }) => {
 
   const logIn = async (credentials) => {
     try {
-      const data = await fetch(`${URL}/login`, {
+      const data = await fetch(`${URL}/sign-in`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
