@@ -37,7 +37,7 @@ const Login = () => {
           placeholder="Email"
         />
         <input
-          className="text-sm w-full px-4 py-2 border border-solid border-gray-300 mb-3 rounded"
+          className="text-sm w-full px-4 py-2 border border-solid border-gray-300 mb-1 rounded"
           type="password"
           name="password"
           value={credentials.password}
