@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { fetchData } from "../utilities/fetchUtility.js";
 
 const URL = "http://localhost:3000";
 
@@ -9,17 +10,7 @@ export const SessionProvider = ({ children }) => {
 
   const logIn = async (credentials) => {
     try {
-      const data = await fetch(`${URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      if (!data.ok) {
-        throw new Error("Error en la autenticacion");
-      }
+      const data = await fetchData(`${URL}/login`, "POST", credentials);
 
       const result = await data.json();
       setSession(result);
@@ -29,8 +20,13 @@ export const SessionProvider = ({ children }) => {
     }
   };
 
-  const logOut = () => {
-    setSession(null);
+  const logOut = async () => {
+    try {
+      await fetchData(`${URL}/logout`, "POST", null);
+      setSession(null);
+    } catch (error) {
+      console.error("Error al cerrar la sesión", error);
+    }
   };
 
   return (
