@@ -7,12 +7,22 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await logIn(credentials);
+    } catch (error) {
+      setError("Credenciales incorrectas");
+    }
   };
 
   return (
@@ -34,6 +44,7 @@ const Login = () => {
           onChange={handleChange}
           placeholder="Password"
         />
+        {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         <div className="mt-4 flex justify-between font-semibold text-sm">
           <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
             <input className="mr-1" type="checkbox" />
@@ -49,7 +60,7 @@ const Login = () => {
         <button
           className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider border border-slate-300 hover:border-slate-400"
           type="submit"
-          onClick={() => logIn(credentials)}
+          onClick={handleSubmit}
         >
           Login
         </button>
