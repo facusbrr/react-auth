@@ -1,7 +1,18 @@
 import React from "react";
+import Login from "./components/Login";
+
+import { useSession } from "./hooks/useSession";
+import { SessionProvider } from "./context/SessionProvider";
 
 const App = () => {
-  return <div>App</div>;
+  const { session } = useSession();
+  return <div>{session ? <>Bienvenido {session.email}</> : <Login />}</div>;
 };
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <SessionProvider>
+      <App />
+    </SessionProvider>
+  );
+}
